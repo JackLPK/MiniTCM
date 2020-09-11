@@ -60,76 +60,9 @@ class InfoPanel(ScrolledPanel):
         self.SetupScrolling()
         # self.SetBackgroundColour('red')
         self.Bind(wx.EVT_SIZE, self.on_size)
-
-    def set_layout_2(self):
-        MY_FLAG = wx.EXPAND | wx.LEFT | wx.RIGHT | wx.ALIGN_LEFT
-        MY_BORDER = 2
-        fgs = wx.FlexGridSizer(cols=2, vgap=5, hgap=5)
-
-        def add_spacer(fg, w=50, h=10):
-            fg.Add(w, h)
-            fg.Add(w, h)
-
-        add_spacer(fgs)
-
-        # patient
-        fgs.Add(self.lbl_patient_name, flag=MY_FLAG, border=MY_BORDER)
-        fgs.Add(self.edit_patient_name, flag=MY_FLAG, border=MY_BORDER)
-
-        fgs.Add(self.lbl_patient_age, flag=MY_FLAG, border=MY_BORDER)
-        fgs.Add(self.edit_patient_age, flag=MY_FLAG, border=MY_BORDER)
-
-        fgs.Add(self.lbl_patient_gender, flag=MY_FLAG, border=MY_BORDER)
-        fgs.Add(self.edit_patient_gender, flag=MY_FLAG, border=MY_BORDER)
-
-        fgs.Add(self.lbl_patient_contact, flag=MY_FLAG, border=MY_BORDER)
-        fgs.Add(self.edit_patient_contact, flag=MY_FLAG, border=MY_BORDER)
-        add_spacer(fgs)
-
-        # notes
-        fgs.Add(self.lbl_note_1, flag=MY_FLAG, border=MY_BORDER)
-        fgs.Add(self.edit_note_1, 1, flag=MY_FLAG, border=MY_BORDER)
-
-        fgs.Add(self.lbl_note_2, flag=MY_FLAG, border=MY_BORDER)
-        fgs.Add(self.edit_note_2, 1, flag=MY_FLAG, border=MY_BORDER)
-
-        fgs.Add(self.lbl_note_3, flag=MY_FLAG, border=MY_BORDER)
-        fgs.Add(self.edit_note_3, 1, flag=MY_FLAG, border=MY_BORDER)
-        add_spacer(fgs)
-
-        # doctor
-        fgs.Add(self.lbl_organiaztion_name, flag=MY_FLAG, border=MY_BORDER)
-        fgs.Add(self.edit_organiaztion_name, flag=MY_FLAG, border=MY_BORDER)
-
-        fgs.Add(self.lbl_doctor_name, flag=MY_FLAG, border=MY_BORDER)
-        fgs.Add(self.edit_doctor_name, flag=MY_FLAG, border=MY_BORDER)
-        add_spacer(fgs)
-
-        # misc
-        fgs.Add(self.lbl_mass_unit, flag=MY_FLAG, border=MY_BORDER)
-        fgs.Add(self.edit_mass_unit, flag=MY_FLAG, border=MY_BORDER)
-
-        fgs.Add(self.lbl_dangerous, flag=MY_FLAG, border=MY_BORDER)
-        fgs.Add(self.edit_dangerous, flag=MY_FLAG, border=MY_BORDER)
-
-        fgs.Add(self.lbl_amount_1, flag=MY_FLAG, border=MY_BORDER)
-        fgs.Add(self.edit_amount_1, flag=MY_FLAG, border=MY_BORDER)
-
-        fgs.Add(self.lbl_footer, flag=MY_FLAG, border=MY_BORDER)
-        fgs.Add(self.edit_footer, 1, flag=MY_FLAG, border=MY_BORDER)
-        add_spacer(fgs)
+        self.Layout()
         
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(fgs)
-        
-        sizer.Add(self.btn_clear_1, 0, MY_FLAG, MY_BORDER)
-        sizer.Add(self.btn_clear_2, 0, MY_FLAG, MY_BORDER) 
-        
-        # growables; later: rewrite into function
-        fgs.AddGrowableRow(4, 1)
-        fgs.AddGrowableRow(5, 1)
-        fgs.AddGrowableRow(6, 1)
-        self.SetSizer(sizer)
+
 
     def set_layout(self):
         
@@ -165,10 +98,7 @@ class InfoPanel(ScrolledPanel):
         sizer.Add(self.btn_clear_1, pos=(16, 0), span=(1, 2), flag=wx.EXPAND)
         sizer.Add(self.btn_clear_2, (17, 0), span=(1, 2), flag=wx.EXPAND)
         
-        # for g in to_grow:
-        #     sizer.AddGrowableRow(g[0], g[1])
-        # sizer.AddGrowableRow(4, 1)
-        # sizer.AddGrowableCol(0)
+
         sizer.AddGrowableCol(1)
         self.SetSizer(sizer)
 

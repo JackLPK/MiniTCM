@@ -12,6 +12,7 @@ class OutGrid(wx.grid.Grid):
         self.CreateGrid(0, len(self.labels))  # test purpose, can remove
         self.set_col_labels()
         self.HideRowLabels()
+        self.EnableDragRowSize(False)
 
         self.set_cell_attributes()
         self.get_mass = parent.get_mass

@@ -16,6 +16,7 @@ class InGrid(wx.grid.Grid):
         self.EnableDragColSize()
         self.set_cell_attributes()
         self.SetSelectionMode(self.GridSelectRows)
+        self.EnableDragRowSize(False)
         #
         self.set_col_labels()
         
@@ -26,9 +27,9 @@ class InGrid(wx.grid.Grid):
         self.Bind(wx.EVT_SIZE, self.on_size)
         
     def on_size(self, event:wx.Event):
-        width = event.GetSize()[0]
-        for col, _v in enumerate(self.labels):
-            self.SetColSize(col, width/len(self.labels))
+        # width = event.GetSize()[0]
+        # for col, _v in enumerate(self.labels):
+        #     self.SetColSize(col, width/len(self.labels))
         event.Skip()
         
         
