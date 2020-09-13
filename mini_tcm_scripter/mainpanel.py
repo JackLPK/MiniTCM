@@ -1,4 +1,5 @@
 from pathlib import Path
+from pprint import pprint
 from mini_tcm_scripter import PROFILE_DIR
 
 import wx
@@ -54,13 +55,49 @@ class MainPanel(wx.Panel):
         self.search_bar.Bind(wx.EVT_TEXT_ENTER, self.on_text_enter)
         self.search_bar.Bind(wx.EVT_KEY_DOWN, self.on_key_down)
         self.in_grid.Bind(wx.grid.EVT_GRID_CELL_LEFT_DCLICK, self.on_grid_left_dclick)
-        self.btn_reload.Bind(wx.EVT_BUTTON, self.reload_info)
+        self.btn_reload.Bind(wx.EVT_BUTTON, self.on_button)
+        self.info_panel.Bind(wx.EVT_BUTTON, self.on_button)
 
-    def reload_info(self, event):
+    def reload_info(self):
         fp = wx.FileSelector('Choose profile:', PROFILE_DIR.as_posix())
         # remember starting directory
-        self.info_panel.reload_ui(fp=fp)
+        if fp != '':
+            self.info_panel.reload_ui(fp=fp)
 
+    def on_button(self, event:wx.Event):
+        event_obj = event.GetEventObject()
+        
+        if event_obj == self.btn_reload:
+            self.reload_info()
+        elif event_obj == self.info_panel.btn_clear_2:
+            print('clear 2')
+            self.out_grid.clear()
+        elif event_obj == self.info_panel.btn_preview:
+            self.preview()
+        elif event_obj == self.info_panel.btn_save:
+            self.save()
+        else:
+            print(event_obj)
+            event.Skip()
+
+    def _export(self):
+        """ Call export on both outgrid and infopanel """
+        data = self.info_panel.export()
+        data['meds'] = self.out_grid.export(self.info_panel.profile)  # rewrite, put profile to mainpanel
+        return data
+    
+    def preview(self):
+        print('preview from mainpanel')
+        data = self._export()
+        pprint(data)
+        
+        pass
+    
+    def save(self):
+        print('save from mainpanel')
+        pass
+            
+    
     def on_text(self, event: wx.Event):
         event_obj = event.EventObject
         if event_obj == self.search_bar:

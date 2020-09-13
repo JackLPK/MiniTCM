@@ -1,3 +1,5 @@
+from pprint import pprint
+
 import wx
 import wx.grid
 from sample_data import sample_med_prep, sample_out_labels, sample_med_store
@@ -21,7 +23,7 @@ class OutGrid(wx.grid.Grid):
 
     def set_binding(self):
         self.Bind(wx.grid.EVT_GRID_CMD_CELL_RIGHT_DCLICK, self.on_cell_rdclick)
-    
+
     def on_cell_rdclick(self, event:wx.grid.GridEvent):
         row, col = event.Row, event.Col
         if col in (0, 1):    # softcode this!!
@@ -49,8 +51,8 @@ class OutGrid(wx.grid.Grid):
         self.ca_mass.SetEditor(self.mass_editor)
         self.SetColAttr(3, self.ca_mass)
 
-
     def add(self, id):
+        """ Add item to grid using obj id """
         name_key = 'chinese_t'  # softcode this!!
         name = [obj[name_key] for obj in sample_med_store if int(obj['id']) == id]
         if len(name) > 1:
@@ -69,10 +71,28 @@ class OutGrid(wx.grid.Grid):
         self.SetCellValue(row, self.labels.index('name'), name)
         self.SetCellValue(row, self.labels.index('method'), prep)
         self.SetCellValue(row, self.labels.index('mass'), str(mass))
-        
+
         self.statusbar.PushStatusText(f'++ {name}')
-        
+
     def remove(self, row):
         value = self.GetCellValue(row, 1)
         self.statusbar.PushStatusText(f'-- {value}')
         self.DeleteRows(row)
+
+    def clear(self):
+        if self.NumberRows > 0:
+            self.DeleteRows(0, self.NumberRows)
+
+    def export(self, profile):
+        retval = []
+        for row in range(self.NumberRows):
+            print(row)
+
+            # rewrite, parse name and method base on profile
+            _dic = {
+                'name': self.GetCellValue(row, self.labels.index('name')) + self.GetCellValue(row, self.labels.index('method')),
+                'mass': self.GetCellValue(row, self.labels.index('mass'))
+            }
+            retval.append(_dic)
+            
+        return retval

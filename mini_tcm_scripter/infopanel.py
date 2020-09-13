@@ -29,7 +29,9 @@ class InfoPanel(ScrolledPanel):
     def set_binding(self):
         self.btn_debug.Bind(wx.EVT_BUTTON, self.on_button)
         self.btn_clear_1.Bind(wx.EVT_BUTTON, self.on_button)
+        self.btn_clear_2.Bind(wx.EVT_BUTTON, self.on_button)
         self.btn_preview.Bind(wx.EVT_BUTTON, self.on_button)
+        self.btn_save.Bind(wx.EVT_BUTTON, self.on_button)
         
     def set_profile(self, fp=None):
         fp = list(PROFILE_DIR.glob('*.toml'))[0] if fp is None else fp
@@ -44,10 +46,11 @@ class InfoPanel(ScrolledPanel):
         elif event_obj == self.btn_clear_1:
             self.set_defaults()
         elif event_obj == self.btn_clear_2:
-            print('clear 2')
+            event.Skip()
         elif event_obj == self.btn_preview:
-            self.preview123()
-            pass
+            event.Skip()
+        elif event_obj == self.btn_save:
+            event.Skip()
         else:
             event.Skip()
     
@@ -101,6 +104,7 @@ class InfoPanel(ScrolledPanel):
         self.btn_clear_1 = wx.Button(self, label='Clear info')
         self.btn_clear_2 = wx.Button(self, label='Clear grid')
         self.btn_preview = wx.Button(self, label='Preview')
+        self.btn_save = wx.Button(self, label='Save')
         self.btn_debug = wx.Button(self, label='debug')
 
     def set_defaults(self, event=None):
@@ -150,6 +154,7 @@ class InfoPanel(ScrolledPanel):
             self.btn_clear_1,
             self.btn_clear_2,
             self.btn_preview,
+            self.btn_save,
             self.btn_debug
         )
 
@@ -237,8 +242,6 @@ class InfoPanel(ScrolledPanel):
     def _make_notes(self):
         note_lbls = self.profile['notes']
 
-        # print('make notes', note_lbls)
-        
         retval = []
         for note in note_lbls:
             lbl = wx.StaticText(self, label=note)
