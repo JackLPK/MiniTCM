@@ -1,3 +1,6 @@
+from pathlib import Path
+from mini_tcm_scripter import PROFILE_DIR
+
 import wx
 import wx.grid
 from mini_tcm_scripter.infopanel import InfoPanel
@@ -10,6 +13,7 @@ class MainPanel(wx.Panel):
         super(MainPanel, self).__init__(parent, *args, **kwargs)
         self.statusbar = parent.statusbar
         self.search_bar = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
+        self.btn_reload = wx.Button(self, label='Choose Profile')
 
         self.in_grid = InGrid(self)
         self.out_grid = OutGrid(self)
@@ -27,7 +31,7 @@ class MainPanel(wx.Panel):
         sizer_1.Add((50, -1), 1)
         sizer_1.Add(self.search_bar, 3, flag=wx.ALL, border=5)
         sizer_1.Add((50, -1), 2)
-        sizer_1.Add((50, -1), 1)
+        sizer_1.Add(self.btn_reload, -1, flag=wx.ALL, border=5)
         sizer_1.Add((50, -1), 1)
         
         sizer_2 = wx.BoxSizer()
@@ -50,8 +54,14 @@ class MainPanel(wx.Panel):
         self.search_bar.Bind(wx.EVT_TEXT_ENTER, self.on_text_enter)
         self.search_bar.Bind(wx.EVT_KEY_DOWN, self.on_key_down)
         self.in_grid.Bind(wx.grid.EVT_GRID_CELL_LEFT_DCLICK, self.on_grid_left_dclick)
-        self.info_panel.btn_preview.Bind(wx.EVT_BUTTON, lambda: print('hi'))
+        self.btn_reload.Bind(wx.EVT_BUTTON, self.reload_info)
 
+    def reload_info(self, event):
+        fp = wx.FileSelector('hi', PROFILE_DIR.as_posix())
+        # remember starting directory
+        self.info_panel.reload_ui(fp)
+    
+    
     def on_text(self, event: wx.Event):
         event_obj = event.EventObject
         if event_obj == self.search_bar:
