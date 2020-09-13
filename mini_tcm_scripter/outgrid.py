@@ -1,6 +1,6 @@
 import wx
 import wx.grid
-from mini_tcm_scripter.sample_data import sample_med_prep, sample_out_labels, sample_med_store
+from sample_data import sample_med_prep, sample_out_labels, sample_med_store
 from mini_tcm_scripter import NO_EDITOR
 
 

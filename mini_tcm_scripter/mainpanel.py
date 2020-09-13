@@ -30,10 +30,6 @@ class MainPanel(wx.Panel):
         sizer_1.Add((50, -1), 1)
         sizer_1.Add((50, -1), 1)
         
-        # sizer_3 = wx.BoxSizer(wx.VERTICAL)
-        # sizer_3.Add(self.info_panel, 2, wx.EXPAND)
-        # sizer_3.Add(self.bpanel, 8, wx.EXPAND)
-        
         sizer_2 = wx.BoxSizer()
         sizer_2.Add(self.in_grid, 1, wx.EXPAND|wx.ALIGN_TOP|wx.ALL, 5)
         sizer_2.Add(self.out_grid, 1, wx.EXPAND|wx.ALIGN_TOP|wx.ALL, 5)
@@ -54,6 +50,7 @@ class MainPanel(wx.Panel):
         self.search_bar.Bind(wx.EVT_TEXT_ENTER, self.on_text_enter)
         self.search_bar.Bind(wx.EVT_KEY_DOWN, self.on_key_down)
         self.in_grid.Bind(wx.grid.EVT_GRID_CELL_LEFT_DCLICK, self.on_grid_left_dclick)
+        self.info_panel.btn_preview.Bind(wx.EVT_BUTTON, lambda: print('hi'))
 
     def on_text(self, event: wx.Event):
         event_obj = event.EventObject
@@ -95,3 +92,4 @@ class MainPanel(wx.Panel):
         mass = self.search_bar.Value.partition(':')[2]  # None or num
         self.search_bar.Clear()    # clear search bar
         return mass if mass.isdigit() else 1
+    

@@ -6,6 +6,7 @@ from wx.lib.scrolledpanel import ScrolledPanel
 from mini_tcm_scripter.ingrid import InGrid
 from mini_tcm_scripter.outgrid import OutGrid
 
+raise Exception('This should have be loaded.')
 
 
 class InfoPanel(ScrolledPanel):

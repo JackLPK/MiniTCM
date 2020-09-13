@@ -2,7 +2,7 @@ import wx
 import re
 from pprint import pprint
 import wx.grid
-from mini_tcm_scripter.sample_data import sample_med_store, sample_med_store_labels
+from sample_data import sample_med_store, sample_med_store_labels
 from mini_tcm_scripter import NO_EDITOR
 
 
