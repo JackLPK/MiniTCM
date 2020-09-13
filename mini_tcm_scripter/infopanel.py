@@ -33,6 +33,7 @@ class InfoPanel(ScrolledPanel):
         
     def set_profile(self, fp=None):
         fp = list(PROFILE_DIR.glob('*.toml'))[0] if fp is None else fp
+
         return toml.loads(Path(fp).read_text(encoding='utf-8'))
     
     def on_button(self, event:wx.Event):
@@ -50,7 +51,7 @@ class InfoPanel(ScrolledPanel):
         else:
             event.Skip()
     
-    def reload_ui(self, e=None, fp=None):
+    def reload_ui(self, fp=None):
         self.sizer.Clear(True)
 
         self.profile = self.set_profile(fp)
@@ -236,6 +237,8 @@ class InfoPanel(ScrolledPanel):
     def _make_notes(self):
         note_lbls = self.profile['notes']
 
+        # print('make notes', note_lbls)
+        
         retval = []
         for note in note_lbls:
             lbl = wx.StaticText(self, label=note)

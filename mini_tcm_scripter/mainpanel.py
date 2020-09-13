@@ -20,10 +20,10 @@ class MainPanel(wx.Panel):
 
         self.info_panel = InfoPanel(self)
         # self.bpanel = BPanel(self)
-        
+
         self.set_layout()
         self.set_binding()
-        
+
     def set_layout(self):
 
         # top bar area
@@ -33,22 +33,22 @@ class MainPanel(wx.Panel):
         sizer_1.Add((50, -1), 2)
         sizer_1.Add(self.btn_reload, -1, flag=wx.ALL, border=5)
         sizer_1.Add((50, -1), 1)
-        
+
         sizer_2 = wx.BoxSizer()
         sizer_2.Add(self.in_grid, 1, wx.EXPAND|wx.ALIGN_TOP|wx.ALL, 5)
         sizer_2.Add(self.out_grid, 1, wx.EXPAND|wx.ALIGN_TOP|wx.ALL, 5)
         sizer_2.Add(self.info_panel, 1, wx.EXPAND|wx.ALIGN_TOP|wx.ALL, 5)
-        
-        # 
+
+        #
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(sizer_1, 1, wx.EXPAND)
         sizer.Add(wx.StaticLine(self, ))
         sizer.Add(sizer_2, 1, wx.EXPAND)
-        
-        # 
+
+        #
         self.SetSizer(sizer)
         self.Layout()
-        
+
     def set_binding(self):
         self.search_bar.Bind(wx.EVT_TEXT, self.on_text)
         self.search_bar.Bind(wx.EVT_TEXT_ENTER, self.on_text_enter)
@@ -57,11 +57,10 @@ class MainPanel(wx.Panel):
         self.btn_reload.Bind(wx.EVT_BUTTON, self.reload_info)
 
     def reload_info(self, event):
-        fp = wx.FileSelector('hi', PROFILE_DIR.as_posix())
+        fp = wx.FileSelector('Choose profile:', PROFILE_DIR.as_posix())
         # remember starting directory
-        self.info_panel.reload_ui(fp)
-    
-    
+        self.info_panel.reload_ui(fp=fp)
+
     def on_text(self, event: wx.Event):
         event_obj = event.EventObject
         if event_obj == self.search_bar:
@@ -82,24 +81,24 @@ class MainPanel(wx.Panel):
                 self.in_grid.select_new_row('D')
         else:
             event.Skip()
-    
+
     def on_text_enter(self, event: wx.Event):
         event_obj = event.GetEventObject()
         if event_obj == self.search_bar:
             med_id = self.in_grid.current_id
             self.out_grid.add(med_id)
         # no skip
-    
+
     def on_grid_left_dclick(self, event:wx.grid.GridEvent):
         event_obj = event.GetEventObject()
         if event_obj == self.in_grid:
             med_id = self.in_grid.current_id
             self.out_grid.add(med_id)
         event.Skip()
-        
+
     def get_mass(self)->int:
         """ Get mass as int """
         mass = self.search_bar.Value.partition(':')[2]  # None or num
         self.search_bar.Clear()    # clear search bar
         return mass if mass.isdigit() else 1
-    
+
