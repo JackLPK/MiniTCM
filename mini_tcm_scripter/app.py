@@ -11,9 +11,9 @@ class MyApp(wx.App):
         self.frame1.CenterOnScreen()
         self.frame1.Show()
 
-        # self.frame2 = DFrame(None, 'Debug')
-        # self.frame2.Center()
-        # self.frame2.Show()
+        self.frame2 = DFrame(None, 'Debug')
+        self.frame2.Center()
+        self.frame2.Show()
 
         return True
 

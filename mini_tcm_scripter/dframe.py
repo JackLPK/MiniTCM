@@ -1,7 +1,11 @@
 """ Debug Frame. """
-import wx
 import json
 from pprint import pprint
+from pathlib import Path
+
+import wx
+from mini_tcm_scripter.report import create_pdf
+from mini_tcm_scripter import RECORDS_DIR
 
 DEBUG = True
 
@@ -20,9 +24,9 @@ class DFrame(wx.Frame):
 
         # json
         if DEBUG:
-            from sample_data import sample_export_data
-            text = json.dumps(sample_export_data, ensure_ascii=False)
-            self.edit.SetValue(text)
+            with open(RECORDS_DIR / '2020-09.json') as jfile:
+                text = json.dumps((json.load(jfile)[0]), ensure_ascii=False, indent=4)
+                self.edit.SetValue(text)
 
     def set_layout(self):
         inner_sizer = wx.BoxSizer(wx.VERTICAL)
@@ -39,4 +43,4 @@ class DFrame(wx.Frame):
         obj = json.loads(self.edit.Value)
         pprint(obj)
 
-
+        create_pdf(obj)

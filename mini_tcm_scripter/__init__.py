@@ -21,8 +21,8 @@ if not U_DIR.exists():
 print('u dir:', U_DIR)
 assert U_DIR.exists()
 
-# TEMPLATEDIR = Path(U_DIR, 'templates').resolve()
-# assert TEMPLATEDIR.exists()
+TEMPLATES_DIR = Path(U_DIR, 'templates').resolve()
+assert TEMPLATES_DIR.exists()
 
 CONFIG_FP = U_DIR / 'config.toml'
 assert CONFIG_FP.exists()
@@ -30,6 +30,10 @@ assert CONFIG_FP.exists()
 DATA_DIR = Path(U_DIR, 'data').resolve()
 print('data dir:', DATA_DIR)
 assert DATA_DIR.exists()
+
+PDFS_DIR = Path(U_DIR, 'pdfs').resolve()
+print('pdfs dir:', PDFS_DIR)
+assert PDFS_DIR.exists()
 
 PROFILES_DIR = Path(U_DIR, 'profiles').resolve()
 print('profiles dir:', PROFILES_DIR)
