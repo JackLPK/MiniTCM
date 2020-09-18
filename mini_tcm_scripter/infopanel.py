@@ -6,15 +6,15 @@ from pprint import pprint
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel
 
-from mini_tcm_scripter import PROFILE_DIR, SAMPLEDATA_DIR
-from sample_data import sample_profile_1, sample_export_data
+from mini_tcm_scripter import PROFILES_DIR
+# from sample_data import sample_profile_1, sample_export_data
 
 
 class InfoPanel(ScrolledPanel):
-    def __init__(self, parent) -> None:
+    def __init__(self, parent, ini_profile_fp) -> None:
         super(InfoPanel, self).__init__(parent)
-        self.profile = self.set_profile()
-        
+        self.profile = ini_profile_fp
+
         self.make_controls()
         self.make_sections()
         self.set_defaults()
@@ -25,22 +25,17 @@ class InfoPanel(ScrolledPanel):
         # self.SetBackgroundColour('red')
         # self.Bind(wx.EVT_SIZE, self.on_size)
         self.SetupScrolling()
-        
+
     def set_binding(self):
         self.btn_debug.Bind(wx.EVT_BUTTON, self.on_button)
         self.btn_clear_1.Bind(wx.EVT_BUTTON, self.on_button)
         self.btn_clear_2.Bind(wx.EVT_BUTTON, self.on_button)
         self.btn_preview.Bind(wx.EVT_BUTTON, self.on_button)
         self.btn_save.Bind(wx.EVT_BUTTON, self.on_button)
-        
-    def set_profile(self, fp=None):
-        fp = list(PROFILE_DIR.glob('*.toml'))[0] if fp is None else fp
 
-        return toml.loads(Path(fp).read_text(encoding='utf-8'))
-    
     def on_button(self, event:wx.Event):
         event_obj = event.GetEventObject()
-        
+
         if event_obj == self.btn_debug:
             print('debug button')
         elif event_obj == self.btn_clear_1:
@@ -53,23 +48,26 @@ class InfoPanel(ScrolledPanel):
             event.Skip()
         else:
             event.Skip()
-    
-    def reload_ui(self, fp=None):
+
+    def reload_ui(self, profile=None):
+        self.Freeze()
         self.sizer.Clear(True)
 
-        self.profile = self.set_profile(fp)
+        # self.profile = self.get_profile(fp)
+        self.profile = profile
         self.make_controls()
         self.make_sections()
         self.set_defaults()
         self.set_binding()
         self.set_layout()
         self.Layout()
+        self.Thaw()
 
     def make_controls(self):
         # Section: Patient
         self.lbl_patient_name = wx.StaticText(self, label='Patient Name')
         self.edit_patient_name = wx.TextCtrl(self)
-    
+
         self.lbl_patient_age = wx.StaticText(self, label='Patient Age')
         self.edit_patient_age = wx.SpinCtrl(self, min=0, max=1000, initial=0)
 
@@ -113,7 +111,7 @@ class InfoPanel(ScrolledPanel):
         self.edit_patient_age.SetValue(0)
         self.edit_patient_gender.SetSelection(0)
         self.edit_patient_contact.SetValue('')
-        
+
         # Doctor
         self.edit_organiaztion_name.SetValue(self.profile['doctor']['organisation'])
         self.edit_doctor_name.SetValue(self.profile['doctor']['name'])
@@ -121,13 +119,13 @@ class InfoPanel(ScrolledPanel):
         # Notes
         for lbl, edit in self.section_notes:
             edit.SetValue('')
-        
+
         # Misc
         self.edit_mass_unit.SetSelection(0)
         self.edit_dangerous.SetSelection(0)
         self.edit_dosage.SetValue(1)
         self.edit_footer.SetValue(self.profile['footer'])
-        
+
     def make_sections(self):
         self.section_patient = (
             (self.lbl_patient_name, self.edit_patient_name),
@@ -135,7 +133,7 @@ class InfoPanel(ScrolledPanel):
             (self.lbl_patient_gender, self.edit_patient_gender),
             (self.lbl_patient_contact, self.edit_patient_contact)
         )
-        
+
         self.section_notes = self._make_notes()
 
         self.section_doctor = (
@@ -197,7 +195,7 @@ class InfoPanel(ScrolledPanel):
         for btn in self.section_btn:
             self.sizer.Add(btn, (row, 0), span=(1, 2), flag=wx.EXPAND)
             row += 1
-            
+
 
         self.sizer.AddGrowableCol(1)
         for lbl, edit in to_grow:
@@ -208,7 +206,7 @@ class InfoPanel(ScrolledPanel):
     def preview123(self):
         self.export()
         pass
-    
+
     def export(self):
         obj = {
             "script": {
@@ -234,9 +232,9 @@ class InfoPanel(ScrolledPanel):
             "notes": [{"name": lbl.LabelText, "content": edit.Value} for lbl, edit in self.section_notes ]
         }
 
-        
+
         # obj = sample_export_data
-        
+
         return obj
 
     def _make_notes(self):

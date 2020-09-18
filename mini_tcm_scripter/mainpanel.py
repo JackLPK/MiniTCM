@@ -1,6 +1,7 @@
+import toml, csv
 from pathlib import Path
 from pprint import pprint
-from mini_tcm_scripter import PROFILE_DIR
+from mini_tcm_scripter import CONFIG_FP, PROFILES_DIR, U_DIR
 
 import wx
 import wx.grid
@@ -12,15 +13,17 @@ from mini_tcm_scripter.outgrid import OutGrid
 class MainPanel(wx.Panel):
     def __init__(self, parent, *args, **kwargs) -> None:
         super(MainPanel, self).__init__(parent, *args, **kwargs)
+        self.lbl_profile = wx.StaticText(self, label='No Profile')
+        self.profile = self.ini_profile()
+        self.store = self.get_store()
         self.statusbar = parent.statusbar
         self.search_bar = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
         self.btn_reload = wx.Button(self, label='Choose Profile')
 
-        self.in_grid = InGrid(self)
-        self.out_grid = OutGrid(self)
+        self.in_grid = InGrid(self, self.store)
+        self.out_grid = OutGrid(self, self.profile, self.store)
 
-        self.info_panel = InfoPanel(self)
-        # self.bpanel = BPanel(self)
+        self.info_panel = InfoPanel(self, self.profile)
 
         self.set_layout()
         self.set_binding()
@@ -33,6 +36,7 @@ class MainPanel(wx.Panel):
         sizer_1.Add(self.search_bar, 3, flag=wx.ALL, border=5)
         sizer_1.Add((50, -1), 2)
         sizer_1.Add(self.btn_reload, -1, flag=wx.ALL, border=5)
+        sizer_1.Add(self.lbl_profile, -1, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         sizer_1.Add((50, -1), 1)
 
         sizer_2 = wx.BoxSizer()
@@ -58,17 +62,59 @@ class MainPanel(wx.Panel):
         self.btn_reload.Bind(wx.EVT_BUTTON, self.on_button)
         self.info_panel.Bind(wx.EVT_BUTTON, self.on_button)
 
-    def reload_info(self):
-        fp = wx.FileSelector('Choose profile:', PROFILE_DIR.as_posix())
+    def ini_profile(self):
+        """ Initialise profile and set label """
+        p_fp = None
+        try:
+            config = toml.load(CONFIG_FP)
+            p_fp = Path(U_DIR / config['profile']).absolute()
+            if not p_fp.exists():
+                raise KeyError
+
+            self.lbl_profile.SetLabelText(p_fp.stem)
+            return toml.load(p_fp)
+
+        except FileNotFoundError:
+            wx.MessageBox('Cannot find config.toml')
+        except KeyError:
+            wx.MessageBox(f'Cannot identify default profile for {p_fp}')
+
+    def get_store(self):
+        config = toml.load(CONFIG_FP)
+        fp = Path(U_DIR / config['store']).resolve()
+        if not fp.exists():
+            wx.MessageBox(f'Cannot locate store: {fp}')
+        #
+        ms = []
+        with open(fp, newline='') as csv_file:
+            reader = csv.DictReader(csv_file, delimiter='\t')
+            for line in reader:
+                ms.append(line)
+        return ms
+
+    def reload_ui(self):
+        """ Reload profile, affects info panel and outgrid. """
+        # fp = wx.FileSelector('Choose profile:', PROFILES_DIR.as_posix())
+        fdlg = wx.FileDialog(
+            self, 'Choose profile', PROFILES_DIR.as_posix(),
+            style=wx.FD_OPEN|wx.FD_FILE_MUST_EXIST
+        )
+
         # remember starting directory
-        if fp != '':
-            self.info_panel.reload_ui(fp=fp)
+        if fdlg.ShowModal() == wx.ID_OK:
+
+            fp = Path(fdlg.GetPath()).resolve()
+            # print('New profile file:', fp, type(fp))
+            self.profile = toml.load(fp)
+            self.lbl_profile.SetLabelText(fp.stem)
+            self.info_panel.reload_ui(self.profile)
+            self.out_grid.reload_ui(self.profile)
 
     def on_button(self, event:wx.Event):
         event_obj = event.GetEventObject()
-        
+
         if event_obj == self.btn_reload:
-            self.reload_info()
+            self.reload_ui()
         elif event_obj == self.info_panel.btn_clear_2:
             print('clear 2')
             self.out_grid.clear()
@@ -85,19 +131,18 @@ class MainPanel(wx.Panel):
         data = self.info_panel.export()
         data['meds'] = self.out_grid.export(self.info_panel.profile)  # rewrite, put profile to mainpanel
         return data
-    
+
     def preview(self):
         print('preview from mainpanel')
         data = self._export()
         pprint(data)
-        
+
         pass
-    
+
     def save(self):
         print('save from mainpanel')
         pass
-            
-    
+
     def on_text(self, event: wx.Event):
         event_obj = event.EventObject
         if event_obj == self.search_bar:

@@ -8,12 +8,8 @@ class MainFrame(wx.Frame):
         self.statusbar = self.CreateStatusBar()
 
         self.panel = MainPanel(self)
-        
+
         sizer = wx.BoxSizer()
         sizer.Add(self.panel, 1, wx.EXPAND)
         self.SetSizer(sizer)
         self.Layout()
-        
-        
-
-        

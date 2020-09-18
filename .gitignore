@@ -148,4 +148,5 @@ run sample data.py
 server.py
 templates/
 wxhtmlcss.py
-
+sample_hdir/
+fonts/

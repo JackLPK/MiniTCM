@@ -1,15 +1,19 @@
+import csv
+import toml
 from pprint import pprint
+from pathlib import Path
 
 import wx
 import wx.grid
-from sample_data import sample_med_prep, sample_out_labels, sample_med_store
-from mini_tcm_scripter import NO_EDITOR
+from mini_tcm_scripter import NO_EDITOR, CONFIG_FP, U_DIR
 
 
 class OutGrid(wx.grid.Grid):
-    def __init__(self, parent, *args, **kwargs) -> None:
+    def __init__(self, parent, ini_profile, store, *args, **kwargs) -> None:
         super(OutGrid, self).__init__(parent, *args, **kwargs)
-        self.labels = sample_out_labels
+        self.profile = ini_profile
+        self.store = store
+        self.labels = ['id', 'name', 'method', 'mass']
         self.statusbar = parent.statusbar
         self.CreateGrid(0, len(self.labels))  # test purpose, can remove
         self.set_col_labels()
@@ -40,7 +44,8 @@ class OutGrid(wx.grid.Grid):
         self.SetColAttr(1, NO_EDITOR.Clone())
 
         #
-        self.med_prep_choice_editor = wx.grid.GridCellChoiceEditor(sample_med_prep)
+        # self.med_prep_choice_editor = wx.grid.GridCellChoiceEditor(sample_med_prep)
+        self.med_prep_choice_editor = wx.grid.GridCellChoiceEditor(self.profile['prep']['choice'])
         self.ca_med_prep = wx.grid.GridCellAttr()   # cell attr cook method
         self.ca_med_prep.SetEditor(self.med_prep_choice_editor)
         self.SetColAttr(2, self.ca_med_prep)
@@ -51,15 +56,22 @@ class OutGrid(wx.grid.Grid):
         self.ca_mass.SetEditor(self.mass_editor)
         self.SetColAttr(3, self.ca_mass)
 
+    def reload_ui(self, profile):
+        self.profile = profile
+
+        self.set_cell_attributes()
+
     def add(self, id):
         """ Add item to grid using obj id """
         name_key = 'chinese_t'  # softcode this!!
-        name = [obj[name_key] for obj in sample_med_store if int(obj['id']) == id]
+        # name = [obj[name_key] for obj in sample_med_store if int(obj['id']) == id]
+        name = [obj[name_key] for obj in self.store if int(obj['id']) == id]
         if len(name) > 1:
-            raise Exception(f'Error: Arbitary id for data source, {med}')
+            raise Exception(f'Error: Arbitary id for data source, {id}')
         name = name[0]
         mass = self.get_mass()
-        prep = sample_med_prep[0]
+        # prep = sample_med_prep[0]
+        prep = self.profile['prep']['choice'][0]
         print('fn:add', name, mass)
 
         #
@@ -94,5 +106,5 @@ class OutGrid(wx.grid.Grid):
                 'mass': self.GetCellValue(row, self.labels.index('mass'))
             }
             retval.append(_dic)
-            
+
         return retval
