@@ -107,4 +107,4 @@ class OutGrid(wx.grid.Grid):
             }
             retval.append(_dic)
 
-        return retval
+        return retval if len(retval) != 0 else [{'name': '', 'mass': ''}]

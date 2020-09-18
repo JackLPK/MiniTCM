@@ -1,11 +1,13 @@
 """ Debug Frame. """
-import json
+import json, toml
+import webbrowser
 from pprint import pprint
 from pathlib import Path
 
 import wx
+from wx.core import Event
 from mini_tcm_scripter.report import create_pdf
-from mini_tcm_scripter import RECORDS_DIR
+from mini_tcm_scripter import RECORDS_DIR, PDFS_DIR, CONFIG_FP
 
 DEBUG = True
 
@@ -18,7 +20,7 @@ class DFrame(wx.Frame):
         self.edit = wx.TextCtrl(self.panel, style=wx.TE_MULTILINE)
         self.btn1 = wx.Button(self.panel, label='Make PDF')
 
-        self.btn1.Bind(wx.EVT_BUTTON, self.report)
+        self.btn1.Bind(wx.EVT_BUTTON, self.on_button)
 
         self.set_layout()
 
@@ -39,8 +41,28 @@ class DFrame(wx.Frame):
         self.SetSizer(sizer)
         self.Layout()
 
-    def report(self, event:wx.Event):
-        obj = json.loads(self.edit.Value)
-        pprint(obj)
+    def on_button(self, e:wx.Event):
+        e_obj = e.GetEventObject()
+        if e_obj == self.btn1:
+            fdlg = wx.FileDialog(
+                self, 'Export to PDF', PDFS_DIR.as_posix(),
+                style=wx.FD_SAVE, wildcard='PDF files (*.pdf)|*.pdf')
+            if fdlg.ShowModal() == wx.ID_OK:
+                fp = Path(fdlg.GetPath()).resolve()
+                self.report(fp)
+            else:
+                return
 
-        create_pdf(obj)
+        else:
+            e.Skip()
+
+    def report(self, fp:Path):
+        obj = json.loads(self.edit.Value)
+        create_pdf(fp, obj)
+
+        try:
+            if toml.load(CONFIG_FP)['open_after_save'] == True:
+                print('open now')
+                webbrowser.open(fp.as_uri(), new=True, autoraise=True)
+        except Exception as e:
+            print(e)

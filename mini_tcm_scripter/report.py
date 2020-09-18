@@ -1,4 +1,6 @@
+import tempfile
 from copy import deepcopy
+from pathlib import Path
 from pprint import pprint
 
 import reportlab
@@ -220,9 +222,23 @@ class MyPDF:
         category()
         script_id()
 
-def create_pdf(fp=None, obj=None):
+def create_pdf(fp=None, obj=None, temp=False):
     """ expect python dictionary """
     if not obj:
         from sample_data import sample_export_data as obj
-    fp = fp if fp is not None else PDFS_DIR / 'testoop.pdf'
-    MyPDF(fp, obj['data'], False).run()
+
+    if fp is not None:
+        MyPDF(fp, obj['data'], False).run()
+        return fp
+
+    elif fp is None and temp is False:
+        fp = PDFS_DIR / 'testoop.pdf'
+        MyPDF(fp, obj['data'], False).run()
+
+    elif fp is None and temp is True:
+        _handl, fp_str = tempfile.mkstemp(suffix='.pdf')
+        MyPDF(Path(fp_str), obj['data'], False).run()
+        return Path(fp_str).resolve()
+
+    else:
+        raise Exception('error at tempfiles')

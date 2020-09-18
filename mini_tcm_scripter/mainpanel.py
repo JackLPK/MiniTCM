@@ -1,7 +1,11 @@
-import toml, csv
+import csv
+import webbrowser
+import toml
+import tempfile
 from pathlib import Path
 from pprint import pprint
-from mini_tcm_scripter import CONFIG_FP, PROFILES_DIR, U_DIR
+from mini_tcm_scripter import CONFIG_FP, PDFS_DIR, PROFILES_DIR, U_DIR
+from mini_tcm_scripter.report import create_pdf
 
 import wx
 import wx.grid
@@ -94,7 +98,6 @@ class MainPanel(wx.Panel):
 
     def reload_ui(self):
         """ Reload profile, affects info panel and outgrid. """
-        # fp = wx.FileSelector('Choose profile:', PROFILES_DIR.as_posix())
         fdlg = wx.FileDialog(
             self, 'Choose profile', PROFILES_DIR.as_posix(),
             style=wx.FD_OPEN|wx.FD_FILE_MUST_EXIST
@@ -104,7 +107,6 @@ class MainPanel(wx.Panel):
         if fdlg.ShowModal() == wx.ID_OK:
 
             fp = Path(fdlg.GetPath()).resolve()
-            # print('New profile file:', fp, type(fp))
             self.profile = toml.load(fp)
             self.lbl_profile.SetLabelText(fp.stem)
             self.info_panel.reload_ui(self.profile)
@@ -135,13 +137,32 @@ class MainPanel(wx.Panel):
     def preview(self):
         print('preview from mainpanel')
         data = self._export()
-        pprint(data)
+        # pprint(data)
 
+        fp = create_pdf(None, {'data': data}, True)
+        webbrowser.open(fp.as_uri(), True, True)
         pass
 
     def save(self):
         print('save from mainpanel')
-        pass
+        fp = None
+        data = self._export()
+        default_fn = '{}_{}.pdf'.format(data['patient']['name'], data['script']['date'].replace('T', '_'))
+        default_fn = default_fn.replace(':', '_')
+        # print('default filename', default_fn)
+        fdlg = wx.FileDialog(
+            self, 'Save as PDF', PDFS_DIR.as_posix(),
+            default_fn, 'PDF files (*.pdf)|*.pdf', wx.FD_SAVE)
+        if fdlg.ShowModal() == wx.ID_OK:
+            fp = Path(fdlg.GetPath()).resolve()
+            create_pdf(fp, {'data': data}, False)
+            try:
+                if toml.load(CONFIG_FP).get('open_after_save', False):
+                    webbrowser.open(fp.as_uri(), True, True)
+            except:
+                wx.MessageBox('Error: config.toml error', 'Error', style=wx.ICON_ERROR)
+        else:
+            return
 
     def on_text(self, event: wx.Event):
         event_obj = event.EventObject

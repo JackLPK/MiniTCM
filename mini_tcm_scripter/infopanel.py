@@ -209,31 +209,29 @@ class InfoPanel(ScrolledPanel):
 
     def export(self):
         obj = {
-            "script": {
-                "id": 1,
-                "data": datetime.now().isoformat(timespec='seconds'),
-                "unit": self.edit_mass_unit.Value,
-                "dangerous": self.edit_dangerous.Value,
-                "footer": self.edit_footer.Value,
-                "dosage": self.edit_dosage.Value,
-                "payment": False
+            'script': {
+                'id': 1,    # softcode this
+                'subtitle': '處方紙',
+                'date': datetime.now().isoformat(timespec='seconds'),
+                'unit': self.edit_mass_unit.Value,
+                'category': self.edit_dangerous.Value,
+                'footer': self.edit_footer.Value,
+                'dosage': self.edit_dosage.Value,
+                'payment': False
             },
-            "meds": [],
-            "doctor": {
-                "organisation": self.edit_organiaztion_name.Value,
-                "name": self.edit_doctor_name.Value
+            'meds': [],
+            'doctor': {
+                'organisation': self.edit_organiaztion_name.Value,
+                'name': self.edit_doctor_name.Value
             },
-            "patient": {
-            "name": self.edit_patient_name.Value,
-            "age": self.edit_patient_age.Value,
-            "gender": self.edit_patient_age.Value,
-            "contact": self.edit_patient_contact.Value
+            'patient': {
+            'name': self.edit_patient_name.Value,
+            'age': self.edit_patient_age.Value,
+            'gender': self.edit_patient_gender.Value,
+            'contact': self.edit_patient_contact.Value
             },
-            "notes": [{"name": lbl.LabelText, "content": edit.Value} for lbl, edit in self.section_notes ]
+            'notes': [{'name': lbl.LabelText, 'content': edit.Value} for lbl, edit in self.section_notes ]
         }
-
-
-        # obj = sample_export_data
 
         return obj
 
