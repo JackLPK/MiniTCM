@@ -1,6 +1,9 @@
+import json
 import toml
+import zlib
 from pathlib import Path
 from pprint import pprint
+from datetime import datetime
 
 DEBUG = True
 
@@ -46,6 +49,32 @@ assert RECORDS_DIR.exists()
 
 print('- '*20)
 
+def add_to_db(data):
+    try:
+        checksum = zlib.crc32(
+            json.dumps(data, ensure_ascii=False).encode('utf-8')
+            )
+        Path(PROFILES_DIR / 'test.txt').write_text(json.dumps(data, ensure_ascii=False))
+        date_str = data['script']['date']
+        file_name = '{}-{:02}.json'.format(
+            datetime.fromisoformat(date_str).year,
+            datetime.fromisoformat(date_str).month )
+
+        fp =  RECORDS_DIR / file_name
+
+        if not fp.exists():
+            fp.write_text('[]', encoding='utf-8')
+
+        obj_list = json.loads(fp.read_text('utf-8'))
+
+        obj_list.append({'data': data, 'checksum': checksum})
+
+        with open(fp, 'w', encoding='utf-8') as jsonfile:
+            json.dump(obj_list, jsonfile, ensure_ascii=False, indent=4)
+        return True
+    except Exception as e:
+        print('Error', e)
+        return False
 
 # constants for wx
 import wx.grid

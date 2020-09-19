@@ -1,3 +1,4 @@
+import json
 import toml
 from pathlib import Path
 from datetime import datetime
@@ -6,7 +7,7 @@ from pprint import pprint
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel
 
-from mini_tcm_scripter import PROFILES_DIR
+from mini_tcm_scripter import PROFILES_DIR, RECORDS_DIR
 # from sample_data import sample_profile_1, sample_export_data
 
 
@@ -207,10 +208,26 @@ class InfoPanel(ScrolledPanel):
         self.export()
         pass
 
+    def previous_id(self):
+        try:
+            # print(list(RECORDS_DIR.glob('*.json')))
+            fp = sorted(list(RECORDS_DIR.glob('*.json')), reverse=True)[0]
+            # print('fn previous_id fp', fp)
+            with open(fp, encoding='utf-8') as json_file:
+                obj_list = json.load(json_file)
+                last_id = [obj['data']['script']['id'] for obj in obj_list][-1]
+            # print('fn previous_id last_id', last_id)
+            return int(last_id)
+        except Exception as e:
+            print(e)
+            wx.MessageBox('Cannot Retrieve previous record id. Starts with 1 now', 'Warning', wx.ICON_WARNING, self)
+            return 0
+
+
     def export(self):
         obj = {
             'script': {
-                'id': 1,    # softcode this
+                'id': self.previous_id() + 1,    # softcode this
                 'subtitle': '處方紙',
                 'date': datetime.now().isoformat(timespec='seconds'),
                 'unit': self.edit_mass_unit.Value,

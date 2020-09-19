@@ -5,11 +5,10 @@ from pprint import pprint
 from pathlib import Path
 
 import wx
-from wx.core import Event
 from mini_tcm_scripter.report import create_pdf
-from mini_tcm_scripter import RECORDS_DIR, PDFS_DIR, CONFIG_FP
+from mini_tcm_scripter import RECORDS_DIR, PDFS_DIR, CONFIG_FP, DEBUG
 
-DEBUG = True
+# DEBUG = False
 
 class DFrame(wx.Frame):
     """ The frame """

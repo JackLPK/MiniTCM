@@ -4,7 +4,7 @@ import toml
 import tempfile
 from pathlib import Path
 from pprint import pprint
-from mini_tcm_scripter import CONFIG_FP, PDFS_DIR, PROFILES_DIR, U_DIR
+from mini_tcm_scripter import CONFIG_FP, PDFS_DIR, PROFILES_DIR, U_DIR, add_to_db
 from mini_tcm_scripter.report import create_pdf
 
 import wx
@@ -154,6 +154,8 @@ class MainPanel(wx.Panel):
             self, 'Save as PDF', PDFS_DIR.as_posix(),
             default_fn, 'PDF files (*.pdf)|*.pdf', wx.FD_SAVE)
         if fdlg.ShowModal() == wx.ID_OK:
+            if add_to_db(data):    # save to database
+                self.statusbar.PushStatusText('Added to database.')
             fp = Path(fdlg.GetPath()).resolve()
             create_pdf(fp, {'data': data}, False)
             try:
@@ -161,6 +163,7 @@ class MainPanel(wx.Panel):
                     webbrowser.open(fp.as_uri(), True, True)
             except:
                 wx.MessageBox('Error: config.toml error', 'Error', style=wx.ICON_ERROR)
+
         else:
             return
 
