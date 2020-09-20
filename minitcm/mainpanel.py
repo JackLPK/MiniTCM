@@ -116,7 +116,6 @@ class MainPanel(wx.Panel):
         if event_obj == self.btn_reload:
             self.reload_ui()
         elif event_obj == self.info_panel.btn_clear_2:
-            print('clear 2')
             self.out_grid.clear()
         elif event_obj == self.info_panel.btn_preview:
             self.preview()
@@ -133,13 +132,9 @@ class MainPanel(wx.Panel):
         return data
 
     def preview(self):
-        print('preview from mainpanel')
         data = self._export()
-        # pprint(data)
-
         fp = create_pdf(None, {'data': data}, True)
         webbrowser.open(fp.as_uri(), True, True)
-        pass
 
     def save(self):
         print('save from mainpanel')

@@ -72,7 +72,7 @@ class OutGrid(wx.grid.Grid):
         mass = self.get_mass()
         # prep = sample_med_prep[0]
         prep = self.profile['prep']['choice'][0]
-        print('fn:add', name, mass)
+        # print('fn:add', name, mass)
 
         #
         self.AppendRows()
@@ -98,7 +98,7 @@ class OutGrid(wx.grid.Grid):
     def export(self, profile):
         retval = []
         for row in range(self.NumberRows):
-            print(row)
+            # print(row)
 
             # rewrite, parse name and method base on profile
             _dic = {

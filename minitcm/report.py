@@ -1,7 +1,6 @@
 import tempfile
 from copy import deepcopy
 from pathlib import Path
-from pprint import pprint
 
 import reportlab
 from reportlab.lib.pagesizes import A4
@@ -126,7 +125,6 @@ class MyPDF:
             if self.debug :
                 t_style.add('GRID', (0, 0), (-1, -1), 0.1, colors.gray)
 
-            # pprint(data)
             cw = [self.inner_w*0.2, self.inner_w*0.8]
             table = Table(data, colWidths=cw, style=t_style, hAlign='CENTER')
             return [table, ]
@@ -224,9 +222,6 @@ class MyPDF:
 
 def create_pdf(fp=None, obj=None, temp=False):
     """ expect python dictionary """
-    if not obj:
-        from sample_data import sample_export_data as obj
-
     if fp is not None:
         MyPDF(fp, obj['data'], False).run()
         return fp

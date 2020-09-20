@@ -1,6 +1,5 @@
 import wx
 import re
-from pprint import pprint
 import wx.grid
 from minitcm import NO_EDITOR
 

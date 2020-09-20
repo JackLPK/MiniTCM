@@ -28,7 +28,7 @@ class InfoPanel(ScrolledPanel):
         self.SetupScrolling()
 
     def set_binding(self):
-        self.btn_debug.Bind(wx.EVT_BUTTON, self.on_button)
+        # self.btn_debug.Bind(wx.EVT_BUTTON, self.on_button)
         self.btn_clear_1.Bind(wx.EVT_BUTTON, self.on_button)
         self.btn_clear_2.Bind(wx.EVT_BUTTON, self.on_button)
         self.btn_preview.Bind(wx.EVT_BUTTON, self.on_button)
@@ -37,9 +37,9 @@ class InfoPanel(ScrolledPanel):
     def on_button(self, event:wx.Event):
         event_obj = event.GetEventObject()
 
-        if event_obj == self.btn_debug:
-            print('debug button')
-        elif event_obj == self.btn_clear_1:
+        # if event_obj == self.btn_debug:
+        #     print('debug button')
+        if event_obj == self.btn_clear_1:
             self.set_defaults()
         elif event_obj == self.btn_clear_2:
             event.Skip()
@@ -89,7 +89,7 @@ class InfoPanel(ScrolledPanel):
         self.lbl_mass_unit = wx.StaticText(self, label='Mass Unit')
         self.edit_mass_unit = wx.ComboBox(self, choices=self.profile['unit'])
 
-        self.lbl_dangerous = wx.StaticText(self, label='Dangerous')
+        self.lbl_dangerous = wx.StaticText(self, label='Category')
         self.edit_dangerous = wx.ComboBox(self, choices=self.profile['category'])
 
         self.lbl_dosage = wx.StaticText(self, label='Dosage')
@@ -104,12 +104,12 @@ class InfoPanel(ScrolledPanel):
         self.btn_clear_2 = wx.Button(self, label='Clear grid')
         self.btn_preview = wx.Button(self, label='Preview')
         self.btn_save = wx.Button(self, label='Save')
-        self.btn_debug = wx.Button(self, label='debug')
+        # self.btn_debug = wx.Button(self, label='debug')
 
     def set_defaults(self, event=None):
         # Patient
         self.edit_patient_name.SetValue('')
-        self.edit_patient_age.SetValue(0)
+        self.edit_patient_age.SetValue(1)
         self.edit_patient_gender.SetSelection(0)
         self.edit_patient_contact.SetValue('')
 
@@ -155,7 +155,7 @@ class InfoPanel(ScrolledPanel):
             self.btn_clear_2,
             self.btn_preview,
             self.btn_save,
-            self.btn_debug
+            # self.btn_debug
         )
 
     def set_layout(self):
@@ -223,7 +223,6 @@ class InfoPanel(ScrolledPanel):
             print(e)
             wx.MessageBox('Cannot Retrieve previous record id. Starts with 1 now', 'First Time Info', wx.ICON_INFORMATION, self)
             return 0
-
 
     def export(self):
         obj = {

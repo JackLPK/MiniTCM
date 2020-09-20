@@ -1,7 +1,6 @@
 import toml, sys
 from minitcm import CONFIG_FP
 from minitcm.mainframe import MainFrame
-from minitcm.dframe import DFrame
 import wx
 
 
@@ -11,9 +10,10 @@ class MyApp(wx.App):
         try:
             toml.load(CONFIG_FP)
         except Exception as e:
-            # print(f'Error: Cannot load {CONFIG_FP}')
-            wx.MessageBox(f'Error: Cannot load config file\n{CONFIG_FP}', 'Error',
-                          style=wx.ICON_WARNING)
+            print(f'Error: Cannot load config file\n{CONFIG_FP}')
+            wx.MessageBox(
+                f'Error: Cannot load config file\n{CONFIG_FP}', 'Error', 
+                style=wx.ICON_WARNING)
             sys.exit()
 
         #
