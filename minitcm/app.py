@@ -1,7 +1,7 @@
 import toml, sys
-from mini_tcm_scripter import CONFIG_FP
-from mini_tcm_scripter.mainframe import MainFrame
-from mini_tcm_scripter.dframe import DFrame
+from minitcm import CONFIG_FP
+from minitcm.mainframe import MainFrame
+from minitcm.dframe import DFrame
 import wx
 
 

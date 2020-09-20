@@ -7,7 +7,7 @@ from pprint import pprint
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel
 
-from mini_tcm_scripter import PROFILES_DIR, RECORDS_DIR
+from minitcm import PROFILES_DIR, RECORDS_DIR
 # from sample_data import sample_profile_1, sample_export_data
 
 
@@ -221,7 +221,7 @@ class InfoPanel(ScrolledPanel):
             return int(last_id)
         except Exception as e:
             print(e)
-            wx.MessageBox('Cannot Retrieve previous record id. Starts with 1 now', 'Warning', wx.ICON_WARNING, self)
+            wx.MessageBox('Cannot Retrieve previous record id. Starts with 1 now', 'First Time Info', wx.ICON_INFORMATION, self)
             return 0
 
 

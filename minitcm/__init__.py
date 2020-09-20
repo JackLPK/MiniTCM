@@ -7,7 +7,7 @@ from pathlib import Path
 from pprint import pprint
 from datetime import datetime
 
-DEBUG = True
+DEBUG = False
 
 # Directories
 APP_DIR = Path(__file__).parent.resolve()

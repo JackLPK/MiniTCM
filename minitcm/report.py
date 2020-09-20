@@ -12,7 +12,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
 from reportlab.lib.enums import (TA_LEFT, TA_CENTER, TA_RIGHT, TA_JUSTIFY)
 
-from mini_tcm_scripter import FONTS_DIR, PDFS_DIR, TEMPLATES_DIR
+from minitcm import FONTS_DIR, PDFS_DIR, TEMPLATES_DIR
 
 # asian fonts
 from reportlab.pdfbase import pdfmetrics

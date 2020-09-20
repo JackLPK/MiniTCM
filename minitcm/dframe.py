@@ -5,8 +5,8 @@ from pprint import pprint
 from pathlib import Path
 
 import wx
-from mini_tcm_scripter.report import create_pdf
-from mini_tcm_scripter import RECORDS_DIR, PDFS_DIR, CONFIG_FP, DEBUG
+from minitcm.report import create_pdf
+from minitcm import RECORDS_DIR, PDFS_DIR, CONFIG_FP, DEBUG
 
 # DEBUG = False
 

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import wx
 import wx.grid
-from mini_tcm_scripter import NO_EDITOR, CONFIG_FP, U_DIR
+from minitcm import NO_EDITOR, CONFIG_FP, U_DIR
 
 
 class OutGrid(wx.grid.Grid):

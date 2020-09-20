@@ -4,14 +4,14 @@ import toml
 import tempfile
 from pathlib import Path
 from pprint import pprint
-from mini_tcm_scripter import CONFIG_FP, PDFS_DIR, PROFILES_DIR, U_DIR, add_to_db
-from mini_tcm_scripter.report import create_pdf
+from minitcm import CONFIG_FP, PDFS_DIR, PROFILES_DIR, U_DIR, add_to_db
+from minitcm.report import create_pdf
 
 import wx
 import wx.grid
-from mini_tcm_scripter.infopanel import InfoPanel
-from mini_tcm_scripter.ingrid import InGrid
-from mini_tcm_scripter.outgrid import OutGrid
+from minitcm.infopanel import InfoPanel
+from minitcm.ingrid import InGrid
+from minitcm.outgrid import OutGrid
 
 
 class MainPanel(wx.Panel):

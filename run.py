@@ -1,4 +1,4 @@
-# from mini_tcm_scripter.gui import main
-from mini_tcm_scripter.app import main
+# from minitcm.gui import main
+from minitcm.app import main
 
 main()

@@ -2,7 +2,7 @@ import wx
 import re
 from pprint import pprint
 import wx.grid
-from mini_tcm_scripter import NO_EDITOR
+from minitcm import NO_EDITOR
 
 
 class InGrid(wx.grid.Grid):

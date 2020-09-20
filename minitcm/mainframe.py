@@ -1,6 +1,6 @@
-from mini_tcm_scripter import CONFIG_FP
+from minitcm import CONFIG_FP
 import wx
-from mini_tcm_scripter.mainpanel import MainPanel
+from minitcm.mainpanel import MainPanel
 
 class MainFrame(wx.Frame):
     """ The frame """
@@ -39,13 +39,13 @@ class MainFrame(wx.Frame):
         self.Close()
 
     def show_d_frame(self, e:wx.Event):
-        from mini_tcm_scripter.dframe import DFrame
+        from minitcm.dframe import DFrame
         frame2 = DFrame(self, 'Debug')
         frame2.Center()
         frame2.Show()
 
     def show_cs_frame(self, e:wx.Event):
-        from mini_tcm_scripter.checksum_frame import ChecksumFrame
+        from minitcm.checksum_frame import ChecksumFrame
         frame = ChecksumFrame(self, 'Checksum')
         frame.Show()
 
