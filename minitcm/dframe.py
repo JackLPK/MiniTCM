@@ -25,7 +25,7 @@ class DFrame(wx.Frame):
 
         # json
         if DEBUG:
-            with open(RECORDS_DIR / '2020-09.json') as jfile:
+            with open(RECORDS_DIR / '2020-09.json', encoding='utf-8') as jfile:
                 text = json.dumps((json.load(jfile)[0]), ensure_ascii=False, indent=4)
                 self.edit.SetValue(text)
 
@@ -61,7 +61,6 @@ class DFrame(wx.Frame):
 
         try:
             if toml.load(CONFIG_FP)['open_after_save'] == True:
-                print('open now')
                 webbrowser.open(fp.as_uri(), new=True, autoraise=True)
         except Exception as e:
             print(e)

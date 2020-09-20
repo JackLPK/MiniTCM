@@ -28,8 +28,6 @@ PDFS_DIR = Path(U_DIR, 'pdfs').resolve()
 PROFILES_DIR = Path(U_DIR, 'profiles').resolve()
 RECORDS_DIR = Path(U_DIR, 'records').resolve()
 
-# for d in [U_DIR, DATA_DIR, PDFS_DIR, PROFILES_DIR, RECORDS_DIR, TEMPLATES_DIR]:
-#    pass
 if not U_DIR.exists():
     print('Creating directory for user:')
     print(U_DIR)
@@ -37,6 +35,9 @@ if not U_DIR.exists():
     print(f'configure program at:\n{CONFIG_FP}')
 print(f'configure program at:\n{CONFIG_FP}')
 
+for d in [DATA_DIR, PDFS_DIR, PROFILES_DIR, RECORDS_DIR, TEMPLATES_DIR]:
+    if not d.exists():
+        d.mkdir()
 
 # - - - - - #
 def add_to_db(data):

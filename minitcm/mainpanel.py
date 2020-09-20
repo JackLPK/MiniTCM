@@ -1,9 +1,7 @@
 import csv
 import webbrowser
 import toml
-import tempfile
 from pathlib import Path
-from pprint import pprint
 from minitcm import CONFIG_FP, PDFS_DIR, PROFILES_DIR, U_DIR, add_to_db
 from minitcm.report import create_pdf
 
@@ -90,7 +88,7 @@ class MainPanel(wx.Panel):
             wx.MessageBox(f'Cannot locate store: {fp}')
         #
         ms = []
-        with open(fp, newline='') as csv_file:
+        with open(fp, newline='', encoding='utf-8') as csv_file:
             reader = csv.DictReader(csv_file, delimiter='\t')
             for line in reader:
                 ms.append(line)

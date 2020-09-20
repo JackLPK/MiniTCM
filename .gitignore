@@ -141,12 +141,3 @@ cython_debug/
 .vscode/
 
 # mine
-sample_data/
-bottle.py
-parse profile.py
-run sample data.py
-server.py
-templates/
-wxhtmlcss.py
-sample_hdir/
-fonts/
