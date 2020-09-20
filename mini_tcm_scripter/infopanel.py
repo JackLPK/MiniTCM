@@ -92,7 +92,7 @@ class InfoPanel(ScrolledPanel):
         self.lbl_dangerous = wx.StaticText(self, label='Dangerous')
         self.edit_dangerous = wx.ComboBox(self, choices=self.profile['category'])
 
-        self.lbl_dosage = wx.StaticText(self, label='Sticker A')
+        self.lbl_dosage = wx.StaticText(self, label='Dosage')
         self.edit_dosage = wx.SpinCtrl(self, min=0, max=1000, initial=1)
 
         self.lbl_footer = wx.StaticText(self, label='Footer')
