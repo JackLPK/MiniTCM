@@ -7,7 +7,7 @@
 
 # The default profile to use.
 profile = "profiles/Profile 1.toml"
-store = "data/sample_meds_2020-05-26.csv"
+store = "data/sample.csv"
 
 # open_after_save = true
 # pdfviewer = false

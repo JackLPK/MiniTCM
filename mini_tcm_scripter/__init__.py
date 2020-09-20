@@ -1,3 +1,5 @@
+import sys
+import shutil
 import json
 import toml
 import zlib
@@ -8,8 +10,11 @@ from datetime import datetime
 DEBUG = True
 
 # Directories
-PROJ_DIR = Path(__file__).parent.parent.resolve()
-FONTS_DIR = Path(PROJ_DIR, 'fonts').resolve()
+APP_DIR = Path(__file__).parent.resolve()
+PROJ_DIR = APP_DIR.parent.resolve()
+FONTS_DIR = Path(APP_DIR, 'resources', 'fonts').resolve()
+SAMPLE_DIR = Path(APP_DIR , 'resources' , 'sample' , 'MiniTCM').resolve()
+assert SAMPLE_DIR.exists()
 
 if DEBUG:
     U_DIR = Path(PROJ_DIR , 'sample_hdir' , 'MiniTCM')    # $HOME/MiniTCM/, for testing
@@ -23,11 +28,14 @@ PDFS_DIR = Path(U_DIR, 'pdfs').resolve()
 PROFILES_DIR = Path(U_DIR, 'profiles').resolve()
 RECORDS_DIR = Path(U_DIR, 'records').resolve()
 
-print('- '*20)
-
-for d in [U_DIR, DATA_DIR, PDFS_DIR, PROFILES_DIR, RECORDS_DIR, TEMPLATES_DIR]:
-    if not d.exists():
-        d.mkdir()
+# for d in [U_DIR, DATA_DIR, PDFS_DIR, PROFILES_DIR, RECORDS_DIR, TEMPLATES_DIR]:
+#    pass
+if not U_DIR.exists():
+    print('Creating directory for user:')
+    print(U_DIR)
+    shutil.copytree(SAMPLE_DIR, U_DIR.resolve())
+    print(f'configure program at:\n{CONFIG_FP}')
+print(f'configure program at:\n{CONFIG_FP}')
 
 
 # - - - - - #

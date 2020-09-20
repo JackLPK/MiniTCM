@@ -1,3 +1,4 @@
+from mini_tcm_scripter import CONFIG_FP
 import wx
 from mini_tcm_scripter.mainpanel import MainPanel
 
@@ -18,18 +19,19 @@ class MainFrame(wx.Frame):
     def set_menu(self):
         menu_bar = wx.MenuBar()
         file_menu = wx.Menu()
+        settings_item = file_menu.Append(wx.ID_ANY, '&Settings', 'Configure program')
         file_item = file_menu.Append(wx.ID_EXIT, '&Quit', 'Quit application')
 
         tools_menu = wx.Menu()
         json2pdf_item = tools_menu.Append(wx.ID_ANY, 'JSON to PDF', 'Convert JSON string to PDF')
         checksum_item = tools_menu.Append(wx.ID_ANY, 'Checksum', 'Calculate checksum')
-
-
+        
         menu_bar.Append(file_menu, '&File')
         menu_bar.Append(tools_menu, '&Tools')
         self.SetMenuBar(menu_bar)
 
         self.Bind(wx.EVT_MENU, self.on_quit, file_item)
+        self.Bind(wx.EVT_MENU, self.show_settings, settings_item)
         self.Bind(wx.EVT_MENU, self.show_d_frame, json2pdf_item)
         self.Bind(wx.EVT_MENU, self.show_cs_frame, checksum_item)
 
@@ -47,3 +49,7 @@ class MainFrame(wx.Frame):
         frame = ChecksumFrame(self, 'Checksum')
         frame.Show()
 
+    def show_settings(self, e:wx.Event):
+        wx.MessageBox(f'Configure program at:\n{CONFIG_FP}', 'Settings')
+        print(f'Configure program at:\n{CONFIG_FP}')
+        pass
