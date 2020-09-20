@@ -119,7 +119,8 @@ class InfoPanel(ScrolledPanel):
 
         # Notes
         for lbl, edit in self.section_notes:
-            edit.SetValue('')
+            content = [note['content'] for note in self.profile['notes'] if note['name'] == lbl.LabelText][0]
+            edit.SetValue(content)
 
         # Misc
         self.edit_mass_unit.SetSelection(0)
@@ -253,12 +254,12 @@ class InfoPanel(ScrolledPanel):
         return obj
 
     def _make_notes(self):
-        note_lbls = self.profile['notes']
-
+        notes = self.profile['notes']
         retval = []
-        for note in note_lbls:
-            lbl = wx.StaticText(self, label=note)
+        for note in notes:
+            lbl = wx.StaticText(self, label=note['name'])
             edit = wx.TextCtrl(self, style=wx.TE_MULTILINE, size=(-1, 60))
+            edit.ChangeValue(note['content'])
             retval.append((lbl, edit))
 
         return retval
