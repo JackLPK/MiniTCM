@@ -12,12 +12,12 @@ class MyApp(wx.App):
         except Exception as e:
             print(f'Error: Cannot load config file\n{CONFIG_FP}')
             wx.MessageBox(
-                f'Error: Cannot load config file\n{CONFIG_FP}', 'Error', 
+                f'Error: Cannot load config file\n{CONFIG_FP}', 'Error',
                 style=wx.ICON_WARNING)
             sys.exit()
 
         #
-        self.frame1 = MainFrame(None, 'Hello TCM')
+        self.frame1 = MainFrame(None, 'Mini TCM')
         self.frame1.SetMinSize((900, 750))
         self.frame1.SetSize(-1, -1, 900, 750)
         self.frame1.CenterOnScreen()

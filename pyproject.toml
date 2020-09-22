@@ -8,7 +8,6 @@ authors = ["JackLPK <puikit.li.jack@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.7"
 reportlab = "^3.5.49"
-Jinja2 = "^2.11.2"
 wxPython = "^4.1.0"
 toml = "^0.10.1"
 
