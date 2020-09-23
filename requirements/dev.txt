@@ -1,0 +1,4 @@
+-r common.txt
+
+# PyInstaller
+pyinstaller==4.0
