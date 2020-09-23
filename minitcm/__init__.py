@@ -45,7 +45,7 @@ def add_to_db(data):
         checksum = zlib.crc32(
             json.dumps(data, ensure_ascii=False).encode('utf-8')
             )
-        Path(PROFILES_DIR / 'test.txt').write_text(json.dumps(data, ensure_ascii=False))
+        Path(PROFILES_DIR / 'test.txt').write_text(json.dumps(data, ensure_ascii=False), encoding='utf-8')
         date_str = data['script']['date']
         file_name = '{}-{:02}.json'.format(
             datetime.fromisoformat(date_str).year,
