@@ -2,7 +2,6 @@ import tempfile
 from copy import deepcopy
 from pathlib import Path
 
-import reportlab
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT, TA_RIGHT
 from reportlab.lib.pagesizes import A4
