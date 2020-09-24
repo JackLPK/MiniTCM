@@ -1,9 +1,10 @@
 # MiniTCM
 A very mini/simple script (PDF) writer for Traditional Cchinese Medidine (TCM). 
 
-<img src="images/MiniTCM-macOS-Screenshot" width="100"><br>
-<img src="images/MiniTCM-Windows-Screenshot" width="100"><br>
-<img src="images/MiniTCM-Ubuntu-Screenshot" width="100"><br>
+<img src="images/MiniTCM-macOS-Screenshot.png" height="200"><br>
+<img src="images/MiniTCM-Windows-Screenshot.png" height="200"><br>
+<img src="images/MiniTCM-Ubuntu-Screenshot.png" height="200"><br>
+
 
 ## Installation
 Here are built executables for Windows 10 and Ubuntu 20.04:
