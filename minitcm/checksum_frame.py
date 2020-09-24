@@ -1,6 +1,8 @@
-import wx
 import json
 import zlib
+
+import wx
+
 
 class ChecksumFrame(wx.Frame):
     """ Checksum """

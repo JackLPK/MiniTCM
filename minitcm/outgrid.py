@@ -1,11 +1,7 @@
-import csv
-import toml
-from pprint import pprint
-from pathlib import Path
-
 import wx
 import wx.grid
-from minitcm import NO_EDITOR, CONFIG_FP, U_DIR
+
+from minitcm import NO_EDITOR
 
 
 class OutGrid(wx.grid.Grid):

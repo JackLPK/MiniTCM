@@ -1,6 +1,8 @@
-import wx
 import re
+
+import wx
 import wx.grid
+
 from minitcm import NO_EDITOR
 
 
@@ -102,4 +104,3 @@ class InGrid(wx.grid.Grid):
                         break
 
             self.fill_grid(new_data)
-

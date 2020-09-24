@@ -1,11 +1,8 @@
-import sys
-import shutil
 import json
-import toml
+import shutil
 import zlib
-from pathlib import Path
-from pprint import pprint
 from datetime import datetime
+from pathlib import Path
 
 
 DEBUG = False
@@ -71,5 +68,7 @@ def add_to_db(data):
 
 # constants for wx
 import wx.grid
+
+
 NO_EDITOR = wx.grid.GridCellAttr()
 NO_EDITOR.SetReadOnly()

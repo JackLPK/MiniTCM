@@ -3,22 +3,22 @@ from copy import deepcopy
 from pathlib import Path
 
 import reportlab
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.units import cm
-from reportlab.pdfgen.canvas import Canvas
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
-from reportlab.lib.enums import (TA_LEFT, TA_CENTER, TA_RIGHT, TA_JUSTIFY)
+from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT, TA_RIGHT
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.lib.units import cm
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfgen.canvas import Canvas
+from reportlab.platypus import (Image, Paragraph, SimpleDocTemplate, Spacer,
+                                Table, TableStyle)
 
 from minitcm import FONTS_DIR, PDFS_DIR, TEMPLATES_DIR
 
-# asian fonts
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
 pdfmetrics.registerFont(TTFont('han', (FONTS_DIR / 'SourceHanSerif' / 'SourceHanSerif-Regular.ttc').as_posix()))
 
-
+# alias
 P = Paragraph
 PS = ParagraphStyle
 

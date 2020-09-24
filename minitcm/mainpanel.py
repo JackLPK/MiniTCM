@@ -1,15 +1,16 @@
 import csv
 import webbrowser
-import toml
 from pathlib import Path
-from minitcm import CONFIG_FP, PDFS_DIR, PROFILES_DIR, U_DIR, add_to_db
-from minitcm.report import create_pdf
 
+import toml
 import wx
 import wx.grid
+
+from minitcm import CONFIG_FP, PDFS_DIR, PROFILES_DIR, U_DIR, add_to_db
 from minitcm.infopanel import InfoPanel
 from minitcm.ingrid import InGrid
 from minitcm.outgrid import OutGrid
+from minitcm.report import create_pdf
 
 
 class MainPanel(wx.Panel):
@@ -200,4 +201,3 @@ class MainPanel(wx.Panel):
         mass = self.search_bar.Value.partition(':')[2]  # None or num
         self.search_bar.Clear()    # clear search bar
         return mass if mass.isdigit() else 1
-

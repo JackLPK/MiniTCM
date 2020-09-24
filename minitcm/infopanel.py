@@ -1,14 +1,10 @@
 import json
-import toml
-from pathlib import Path
 from datetime import datetime
-from pprint import pprint
 
 import wx
 from wx.lib.scrolledpanel import ScrolledPanel
 
-from minitcm import PROFILES_DIR, RECORDS_DIR
-# from sample_data import sample_profile_1, sample_export_data
+from minitcm import RECORDS_DIR
 
 
 class InfoPanel(ScrolledPanel):
@@ -23,12 +19,9 @@ class InfoPanel(ScrolledPanel):
         self.set_layout()
         self.Layout()
 
-        # self.SetBackgroundColour('red')
-        # self.Bind(wx.EVT_SIZE, self.on_size)
         self.SetupScrolling()
 
     def set_binding(self):
-        # self.btn_debug.Bind(wx.EVT_BUTTON, self.on_button)
         self.btn_clear_1.Bind(wx.EVT_BUTTON, self.on_button)
         self.btn_clear_2.Bind(wx.EVT_BUTTON, self.on_button)
         self.btn_preview.Bind(wx.EVT_BUTTON, self.on_button)
@@ -37,8 +30,6 @@ class InfoPanel(ScrolledPanel):
     def on_button(self, event:wx.Event):
         event_obj = event.GetEventObject()
 
-        # if event_obj == self.btn_debug:
-        #     print('debug button')
         if event_obj == self.btn_clear_1:
             self.set_defaults()
         elif event_obj == self.btn_clear_2:
@@ -54,7 +45,6 @@ class InfoPanel(ScrolledPanel):
         self.Freeze()
         self.sizer.Clear(True)
 
-        # self.profile = self.get_profile(fp)
         self.profile = profile
         self.make_controls()
         self.make_sections()
@@ -155,7 +145,6 @@ class InfoPanel(ScrolledPanel):
             self.btn_clear_2,
             self.btn_preview,
             self.btn_save,
-            # self.btn_debug
         )
 
     def set_layout(self):
@@ -211,13 +200,10 @@ class InfoPanel(ScrolledPanel):
 
     def previous_id(self):
         try:
-            # print(list(RECORDS_DIR.glob('*.json')))
             fp = sorted(list(RECORDS_DIR.glob('*.json')), reverse=True)[0]
-            # print('fn previous_id fp', fp)
             with open(fp, encoding='utf-8') as json_file:
                 obj_list = json.load(json_file)
                 last_id = [obj['data']['script']['id'] for obj in obj_list][-1]
-            # print('fn previous_id last_id', last_id)
             return int(last_id)
         except Exception as e:
             print(e)

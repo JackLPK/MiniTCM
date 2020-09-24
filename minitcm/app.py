@@ -1,7 +1,10 @@
-import toml, sys
+import sys
+
+import toml
+import wx
+
 from minitcm import CONFIG_FP
 from minitcm.mainframe import MainFrame
-import wx
 
 
 class MyApp(wx.App):

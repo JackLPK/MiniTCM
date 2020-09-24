@@ -1,9 +1,11 @@
-from os import name
-import wx
 import sys
+
+import wx
 import wx.html
+
 from minitcm import CONFIG_FP, __version__
 from minitcm.mainpanel import MainPanel
+
 
 class AboutDialog(wx.Dialog):
     help_text = \

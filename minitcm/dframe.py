@@ -1,14 +1,14 @@
 """ Debug Frame. """
-import json, toml
+import json
 import webbrowser
-from pprint import pprint
 from pathlib import Path
 
+import toml
 import wx
-from minitcm.report import create_pdf
-from minitcm import RECORDS_DIR, PDFS_DIR, CONFIG_FP, DEBUG
 
-# DEBUG = False
+from minitcm import CONFIG_FP, DEBUG, PDFS_DIR, RECORDS_DIR
+from minitcm.report import create_pdf
+
 
 class DFrame(wx.Frame):
     """ The frame """
