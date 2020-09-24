@@ -1,21 +1,21 @@
 from os import name
-from minitcm import CONFIG_FP
 import wx
 import sys
 import wx.html
+from minitcm import CONFIG_FP, __version__
 from minitcm.mainpanel import MainPanel
 
 class AboutDialog(wx.Dialog):
     help_text = \
 f'''
 <html>
-    <h1>Mini TCM</h1>
+    <h1>Mini TCM ({__version__})</h1>
     <p>
     Running on:<br>
     wxPython {wx.VERSION_STRING}<br>
     Python {sys.version.split(' ')[0]}<br>
 <p>
-    A very mini/simple script(PDF) writer for traditional chiness medicine.
+    A very mini/simple script(PDF) writer for traditional chinese medicine.
 <p>
 </html>
 '''
