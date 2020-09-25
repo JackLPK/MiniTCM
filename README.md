@@ -88,6 +88,7 @@ If you are using [PyInstaller](https://www.pyinstaller.org/) inside [pyenv](http
 * Help/Manual/Wiki.
 * Add translations.
 * Support templates for reportlab.
+* Database? Yes, later.
 * Wheels? Maybe.
 * As a package on PYPI? A very distant future.
 * Higher customisability for fields and stuff.
