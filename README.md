@@ -36,7 +36,8 @@ For Ubuntu and macOS, use `:` inside `--add-data` argument.
 pyi-makespec run.py \
 	--windowed \
 	--name "MiniTCM" \
-	--add-data "./minitcm/resources;minitcm/resources" 
+	--add-data "./minitcm/resources;minitcm/resources"     # Windows
+	--add-data "./minitcm/resources:minitcm/resources"     # Ubuntu, macOS
 ```
 Build.
 ```
