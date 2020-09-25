@@ -1,0 +1,14 @@
+# data csv
+# defautl profile
+# paper size
+# records dir
+
+# Base dir is MiniTCM
+
+# The default profile to use.
+profile = "profiles/Profile 1.toml"
+store = "data/sample.csv"
+
+# open_after_save = true
+# pdfviewer = false
+

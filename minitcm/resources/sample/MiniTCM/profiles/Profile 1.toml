@@ -1,0 +1,25 @@
+subtitle = "處方笺"
+footer = "如有問題，請聯絡醫生。"
+category = [ "一般", "麻醉",]
+gender = [ "M", "F",]
+unit = [ "g", "兩",]
+
+[doctor]
+organisation = "XXYY堂"
+name = "嚴醫生"
+
+[prep]
+auto = "火"
+choice = [ "火", "水", "木", "光", "暗", ]
+
+[[notes]]
+name = "中醫診斷"
+content = ""
+
+[[notes]]
+name = "西醫診斷"
+content = ""
+
+[[notes]]
+name = "使用說明"
+content = "每日｛？｝次，共｛？｝天。"

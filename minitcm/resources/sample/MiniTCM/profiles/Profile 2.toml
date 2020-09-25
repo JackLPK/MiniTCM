@@ -1,0 +1,25 @@
+subtitle = "TCM Script"
+footer = "If there are any problems, please contact doctor."
+category = [ "Normal", "Anesthesia", ]
+gender = [ "M", "F",]
+unit = [ "g", "oz",]
+
+[doctor]
+organisation = "XX YY Clinic"
+name = "Dr. Y"
+
+[prep]
+auto = "fire"
+choice = [ "fire", "water", "wood", "Light", "Dark", ]
+
+[[notes]]
+name = "TCM Diagnosis"
+content = ""
+
+[[notes]]
+name = "West Diagnosis"
+content = ""
+
+[[notes]]
+name = "Instruction"
+content = "Everyday {?}, {?} days total."
