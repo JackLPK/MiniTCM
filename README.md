@@ -10,9 +10,9 @@ A very mini/simple script (PDF) writer for Traditional Chinese Medicine (TCM).
 ---
 Here are built executables for Windows 10 and Ubuntu 20.04:
 
-[windows-exe]()
+[windows-exe](https://github.com/JackLPK/MiniTCM/releases/tag/0.1.0-alpha)
 
-[ubuntu-exe]()
+[ubuntu-exe](https://github.com/JackLPK/MiniTCM/releases/tag/0.1.0-alpha)
 
 **Tips**: You can create shortcut to executable on ~/Desktop.
 If the above executables does not suit you, you can build them by yourself or just run the python code without touching PyInstaller.
