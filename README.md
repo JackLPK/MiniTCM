@@ -1,5 +1,5 @@
 # MiniTCM
-A very mini/simple script (PDF) writer for Traditional Cchinese Medidine (TCM). 
+A very mini/simple script (PDF) writer for Traditional Chinese Medicine (TCM). 
 
 <img src="images/MiniTCM-macOS-Screenshot.png" height="200"><br>
 <img src="images/MiniTCM-Windows-Screenshot.png" height="200"><br>
